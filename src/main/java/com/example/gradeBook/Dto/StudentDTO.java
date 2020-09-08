@@ -7,13 +7,43 @@ import java.util.List;
 
 public class StudentDTO {
     String studentName;
+    String password;
+    String studentEmail;
     List<Courses> courses;
     List<Grades> grades;
+    String status;
 
-    public StudentDTO(String studentName, List<Courses> courses, List<Grades> grades) {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public StudentDTO(String studentName, List<Courses> courses, List<Grades> grades,String studentEmail,String password ) {
         this.studentName = studentName;
         this.courses = courses;
         this.grades = grades;
+        this.studentEmail=studentEmail;
+        this.password=password;
+
     }
 
     public StudentDTO() {

@@ -10,8 +10,11 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    String password;
+    String studentEmail;
 
     String studentName;
+    String status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "student")
@@ -21,14 +24,40 @@ public class Student {
     @OneToMany(mappedBy = "student")
     List<Grades> grades;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Student() {
     }
 
-    public Student(Long id, String studentName, List<Courses> courses, List<Grades> grades) {
+    public Student(Long id, String studentName, List<Courses> courses, List<Grades> grades, String password,String studentEmail) {
         this.id = id;
         this.studentName = studentName;
         this.courses = courses;
         this.grades = grades;
+        this.password=password;
+        this.studentEmail=studentEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
     }
 
     public Long getId() {
