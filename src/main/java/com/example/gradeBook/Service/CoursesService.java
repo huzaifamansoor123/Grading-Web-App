@@ -20,7 +20,7 @@ public class CoursesService {
         Courses courses = new Courses();
         courses.setCourseName(coursesDTO.getCourseName());
         courses.setCourseWeight(coursesDTO.getCourseWeight());
-        courses.setStudent(coursesDTO.getStudent());
+
         coursesRepository.save(courses);
 
         return new ApiResponse(Status.Status_Ok,"Sucessfully Added",courses);
@@ -44,7 +44,8 @@ public class CoursesService {
     public ApiResponse deleteById(Long id){
         Optional<Courses> courses= coursesRepository.findById(id);
         if(courses.isPresent()){
-            coursesRepository.deleteById(id);
+            courses.get().setActive(false);
+            coursesRepository.save(courses.get());
             return new ApiResponse(Status.Status_Ok,"Successfully Deleted", getAllCourses());
         }
         else{
@@ -58,7 +59,6 @@ public class CoursesService {
 
         courses.setCourseName(coursesDTO.getCourseName());
         courses.setCourseWeight(coursesDTO.getCourseWeight());
-        courses.setStudent(coursesDTO.getStudent());
 
         return new ApiResponse(Status.Status_Ok,"Successfully Updated", courses);
     }

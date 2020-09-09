@@ -16,9 +16,11 @@ public class Courses {
 
     Double courseWeight;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    Student student;
+    boolean active;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "courses")
+    List<StudentGrade> studentGrades ;
 
 
     @JsonIgnore
@@ -52,12 +54,12 @@ public class Courses {
         this.courseWeight = courseWeight;
     }
 
-    public Student getStudent() {
-        return student;
+    public List<StudentGrade> getStudentGrades() {
+        return studentGrades;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentGrades(List<StudentGrade> studentGrades) {
+        this.studentGrades = studentGrades;
     }
 
     public List<Grades> getGrades() {
@@ -68,11 +70,19 @@ public class Courses {
         this.grades = grades;
     }
 
-    public Courses(Long id, String courseName, Double courseWeight, Student student, List<Grades> grades) {
-        this.id = id;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Courses(String courseName, Double courseWeight, boolean active, List<StudentGrade> studentGrades, List<Grades> grades) {
         this.courseName = courseName;
         this.courseWeight = courseWeight;
-        this.student = student;
+        this.active = active;
+        this.studentGrades = studentGrades;
         this.grades = grades;
     }
 }
