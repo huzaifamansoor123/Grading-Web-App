@@ -18,10 +18,10 @@ public class Student {
 
     @JsonIgnore
     @OneToMany(mappedBy = "student")
-    List<Courses> courses;
+    List<StudentGrade> studentGrades ;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Grades> grades;
 
     public String getStatus() {
@@ -35,13 +35,13 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String studentName, List<Courses> courses, List<Grades> grades, String password,String studentEmail) {
-        this.id = id;
+    public Student(String password, String studentEmail, String studentName, String status, List<StudentGrade> studentGrades, List<Grades> grades) {
+        this.password = password;
+        this.studentEmail = studentEmail;
         this.studentName = studentName;
-        this.courses = courses;
+        this.status = status;
+        this.studentGrades = studentGrades;
         this.grades = grades;
-        this.password=password;
-        this.studentEmail=studentEmail;
     }
 
     public String getPassword() {
@@ -76,12 +76,12 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public List<Courses> getCourses() {
-        return courses;
+    public List<StudentGrade> getStudentGrades() {
+        return studentGrades;
     }
 
-    public void setCourses(List<Courses> courses) {
-        this.courses = courses;
+    public void setStudentGrades(List<StudentGrade> studentGrades) {
+        this.studentGrades = studentGrades;
     }
 
     public List<Grades> getGrades() {
