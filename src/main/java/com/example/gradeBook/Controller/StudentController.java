@@ -33,7 +33,7 @@ public class StudentController {
     }
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteStudent(@PathVariable("id") Long id){
-        return this.deleteStudent(id);
+        return this.studentService.deleteStudent(id);
     }
 
 }
