@@ -8,6 +8,16 @@ public class Grades {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     double courseMarks;
 
     @ManyToOne
@@ -18,11 +28,12 @@ public class Grades {
     @JoinColumn(name = "course_id", nullable = false)
     Courses course;
 
-    public Grades(Long id, double courseMarks, Student student, Courses course) {
+    public Grades(Long id, double courseMarks, Student student, Courses course,String status) {
         this.id = id;
         this.courseMarks = courseMarks;
         this.student = student;
         this.course = course;
+        this.status=status;
     }
 
     public Grades() {
