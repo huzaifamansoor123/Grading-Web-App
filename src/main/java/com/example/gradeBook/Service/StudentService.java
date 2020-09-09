@@ -65,7 +65,8 @@ public class StudentService {
     }
     public ApiResponse updateStudent( Long id ,  StudentDTO studentDTO){
         Student student=studentRepository.getOne(id);
-        if(student==null){
+        User user=userDao.findByEmail(student.getStudentEmail());
+        if(student==null&&user==null){
             return new ApiResponse(404,"not found",student);
         }
         else {
@@ -75,9 +76,34 @@ public class StudentService {
             student.setStudentName(studentDTO.getStudentName());
             student.setPassword(bcryptEncoder.encode(studentDTO.getPassword()));
             studentRepository.save(student);
+            user.setEmail(studentDTO.getStudentEmail());
+            user.setName(studentDTO.getStudentName());
+            user.setPassword((bcryptEncoder.encode( studentDTO.getPassword())));
+            userDao.save(user);
+
+
+
+
             return new ApiResponse(200, "succesfully updated", student);
 
         }
     }
 
+    public ApiResponse deleteStudent(Long id){
+        Student student=studentRepository.getOne(id);
+        User user=userDao.findByEmail(student.getStudentEmail());
+        if(student==null&&user==null){
+            return new ApiResponse(404,"unsucessfull! student  cannot be deleted ",student);
+        }
+        else {
+            student.setStatus("Unactive");
+            studentRepository.save(student);
+            user.setActive(false);
+            userDao.save(user);
+            return new ApiResponse(200,"sucessfully deleted",student);
+
+        }
+
+
+    }
 }
