@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GradesService {
@@ -31,10 +32,20 @@ public class GradesService {
         return weights;
 
     }
+
+    public ApiResponse getGradeByID(Long id){
+        Optional<Grades> grades = gradesRepository.findById(id);
+        if(grades.isPresent()){
+            return new ApiResponse(Status.Status_Ok,"Successfully Get",grades.get());
+        }
+        else{
+            return new ApiResponse(Status.Status_ERROR,"Not present", null);
+        }
+    }
     public ApiResponse updateWeight(Long id,GradesDTO gradesDTO){
         Grades weightTofound=gradesRepository.getOne(id);
         if(weightTofound==null){
-            return new ApiResponse(404,"not found ",weightTofound);
+            return new ApiResponse(404,"Not found ",weightTofound);
 
         }else {
             weightTofound.setCourse(gradesDTO.getCourse());

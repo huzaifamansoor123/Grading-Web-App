@@ -25,7 +25,11 @@ public class StudentController {
     @GetMapping("/getAll")
     public List<Student> getAllStudents(){
         return this.studentService.getAllStudents();
+    }
 
+    @GetMapping("/{id}")
+    public ApiResponse getStudentByID(@PathVariable("id") Long id){
+     return this.studentService.getStudentByID(id);
     }
     @PutMapping("/update/{id}")
     public ApiResponse updateStudent(@PathVariable("id") Long id ,@RequestBody StudentDTO studentDTO){

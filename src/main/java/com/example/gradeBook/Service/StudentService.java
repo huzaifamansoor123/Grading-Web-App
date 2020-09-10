@@ -1,6 +1,7 @@
 package com.example.gradeBook.Service;
 
 import com.example.gradeBook.Commons.ApiResponse;
+import com.example.gradeBook.Commons.Status;
 import com.example.gradeBook.Dto.StudentDTO;
 import com.example.gradeBook.Model.Student;
 import com.example.gradeBook.Model.User;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -55,14 +57,25 @@ public class StudentService {
             return new ApiResponse(409,"ALREADY EXSIST",foundstudent);
         }
 
-
-
     }
     public List<Student> getAllStudents(){
        List<Student> students= studentRepository.findAll();
        return students;
 
     }
+
+    public ApiResponse getStudentByID(Long id){
+        Optional<Student> student = studentRepository.findById(id);
+        if(student.isPresent()){
+            return new ApiResponse(Status.Status_Ok,"Successfully Get",student.get());
+        }
+        else{
+            return new ApiResponse(Status.Status_ERROR,"Not present", null);
+        }
+    }
+
+
+
     public ApiResponse updateStudent( Long id ,  StudentDTO studentDTO){
         Student student=studentRepository.getOne(id);
         User user=userDao.findByEmail(student.getStudentEmail());

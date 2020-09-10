@@ -36,7 +36,7 @@ public class CoursesService {
                 if(course.isPresent()){
                     return new ApiResponse(Status.Status_Ok,"Successfully get by Id", course.get());
                 }
-        else{
+                else{
                     return new ApiResponse(Status.Status_ERROR,"Not present", null);
                 }
     }

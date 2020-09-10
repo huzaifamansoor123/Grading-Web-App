@@ -23,11 +23,17 @@ public class GradesController {
     public ApiResponse addWeight(@RequestBody GradesDTO gradesDTO){
         return this.gradesService.addWeight(gradesDTO);
     }
+
     @GetMapping("/getAll")
     public List<Grades> getAllWeights(){
         return this.gradesService.getAllWeights();
-
     }
+
+    @GetMapping("{id}")
+    public ApiResponse getGradeByID(@PathVariable("id") Long id){
+        return this.gradesService.getGradeByID(id);
+    }
+
     @PutMapping("/update/{id}")
     public ApiResponse updateWeight(@PathVariable("id") Long id ,@RequestBody GradesDTO gradesDTO){
         return this.gradesService.updateWeight(id,gradesDTO);
