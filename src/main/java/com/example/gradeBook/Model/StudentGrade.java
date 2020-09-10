@@ -11,21 +11,29 @@ public class StudentGrade implements Serializable {
 //    String grades;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+
+
     @ManyToOne
     @JoinColumn
     private Student student;
 
-    @Id
+
     @ManyToOne
     @JoinColumn
     private Courses courses;
 
+    public StudentGrade() {
+    }
+
     public StudentGrade(Student student, Courses courses) {
-//        this.grades = grades;
         this.student = student;
         this.courses = courses;
     }
-//
+
+    //
 //    public String getGrades() {
 //        return grades;
 //    }
@@ -33,6 +41,15 @@ public class StudentGrade implements Serializable {
 //    public void setGrades(String grades) {
 //        this.grades = grades;
 //    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Student getStudent() {
         return student;
