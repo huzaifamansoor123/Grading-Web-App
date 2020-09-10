@@ -10,7 +10,8 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String password;
+    String studentPassword;
+
     String studentEmail;
 
     String studentName;
@@ -36,7 +37,7 @@ public class Student {
     }
 
     public Student(String password, String studentEmail, String studentName, String status, List<StudentGrade> studentGrades, List<Grades> grades) {
-        this.password = password;
+        this.studentPassword = password;
         this.studentEmail = studentEmail;
         this.studentName = studentName;
         this.status = status;
@@ -45,11 +46,11 @@ public class Student {
     }
 
     public String getPassword() {
-        return password;
+        return studentPassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.studentPassword = password;
     }
 
     public String getStudentEmail() {

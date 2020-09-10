@@ -20,6 +20,7 @@ public class CoursesService {
         Courses courses = new Courses();
         courses.setCourseName(coursesDTO.getCourseName());
         courses.setCourseWeight(coursesDTO.getCourseWeight());
+        courses.setActive(true);
 
         coursesRepository.save(courses);
 
@@ -58,6 +59,8 @@ public class CoursesService {
 
         courses.setCourseName(coursesDTO.getCourseName());
         courses.setCourseWeight(coursesDTO.getCourseWeight());
+        courses.setActive(true);
+        coursesRepository.save(courses);
 
         return new ApiResponse(Status.Status_Ok,"Successfully Updated", courses);
     }
