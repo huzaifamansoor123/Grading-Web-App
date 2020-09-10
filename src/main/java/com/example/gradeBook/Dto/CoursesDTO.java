@@ -10,11 +10,11 @@ public class CoursesDTO {
 
     Double courseWeight;
 
-    Student student;
+    List<Student> student;
 
     List<Grades> grades;
 
-    public CoursesDTO(String courseName, Double courseWeight, Student student, List<Grades> grades) {
+    public CoursesDTO(String courseName, Double courseWeight, List<Student> student, List<Grades> grades) {
         this.courseName = courseName;
         this.courseWeight = courseWeight;
         this.student = student;
@@ -40,11 +40,11 @@ public class CoursesDTO {
         this.courseWeight = courseWeight;
     }
 
-    public Student getStudent() {
+    public List<Student> getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(List<Student> student) {
         this.student = student;
     }
 

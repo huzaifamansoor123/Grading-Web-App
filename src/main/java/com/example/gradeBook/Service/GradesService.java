@@ -4,7 +4,9 @@ import com.example.gradeBook.Commons.ApiResponse;
 import com.example.gradeBook.Commons.Status;
 import com.example.gradeBook.Dto.GradesDTO;
 import com.example.gradeBook.Model.Grades;
+import com.example.gradeBook.Model.StudentGrade;
 import com.example.gradeBook.Repository.GradesRepository;
+import com.example.gradeBook.Repository.StudentGradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,25 @@ public class GradesService {
 
     @Autowired
     GradesRepository gradesRepository;
+    @Autowired
+    StudentGradeRepository studentGradeRepository;
+
 
     public ApiResponse addWeight(GradesDTO gradesDTO){
+
         Grades weight=new Grades();
+        StudentGrade studentGrade = new StudentGrade();
+
+
         weight.setCourseMarks(gradesDTO.getCourseMarks());
         weight.setStudent(gradesDTO.getStudent());
         weight.setCourse(gradesDTO.getCourse());
         weight.setStatus("ACTIVE");
+        studentGrade.setStudent(gradesDTO.getStudent());
+        studentGrade.setCourses(gradesDTO.getCourse());
         gradesRepository.save(weight);
+        studentGradeRepository.save(studentGrade);
+
         return new ApiResponse(200,"sucessfully saved",weight);
 
     }

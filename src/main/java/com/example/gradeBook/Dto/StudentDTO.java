@@ -2,6 +2,7 @@ package com.example.gradeBook.Dto;
 
 import com.example.gradeBook.Model.Courses;
 import com.example.gradeBook.Model.Grades;
+import com.example.gradeBook.Model.StudentGrade;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class StudentDTO {
     String studentName;
     String password;
     String studentEmail;
-    List<Courses> courses;
+    List<StudentGrade> studentGrades;
     List<Grades> grades;
     String status;
 
@@ -37,13 +38,13 @@ public class StudentDTO {
         this.status = status;
     }
 
-    public StudentDTO(String studentName, List<Courses> courses, List<Grades> grades,String studentEmail,String password ) {
+    public StudentDTO(String studentName, String password, String studentEmail, List<StudentGrade> studentGrades, List<Grades> grades, String status) {
         this.studentName = studentName;
-        this.courses = courses;
+        this.password = password;
+        this.studentEmail = studentEmail;
+        this.studentGrades = studentGrades;
         this.grades = grades;
-        this.studentEmail=studentEmail;
-        this.password=password;
-
+        this.status = status;
     }
 
     public StudentDTO() {
@@ -57,12 +58,12 @@ public class StudentDTO {
         this.studentName = studentName;
     }
 
-    public List<Courses> getCourses() {
-        return courses;
+    public List<StudentGrade> getStudentGrades() {
+        return studentGrades;
     }
 
-    public void setCourses(List<Courses> courses) {
-        this.courses = courses;
+    public void setStudentGrades(List<StudentGrade> studentGrades) {
+        this.studentGrades = studentGrades;
     }
 
     public List<Grades> getGrades() {

@@ -12,7 +12,6 @@ public class Student {
     Long id;
     String password;
     String studentEmail;
-
     String studentName;
     String status;
 
