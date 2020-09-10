@@ -62,8 +62,7 @@ public class GradesService {
             return new ApiResponse(404,"not found",weightTofound);
         }
         else {
-            weightTofound.setStatus("INACTIVE");
-            gradesRepository.save(weightTofound);
+            gradesRepository.delete(weightTofound);
             return new ApiResponse(200,"successfully deleted",weightTofound);
         }
 

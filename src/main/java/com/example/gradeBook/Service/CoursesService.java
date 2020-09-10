@@ -44,8 +44,7 @@ public class CoursesService {
     public ApiResponse deleteById(Long id){
         Optional<Courses> courses= coursesRepository.findById(id);
         if(courses.isPresent()){
-            courses.get().setActive(false);
-            coursesRepository.save(courses.get());
+            coursesRepository.delete(courses.get());
             return new ApiResponse(Status.Status_Ok,"Successfully Deleted", getAllCourses());
         }
         else{

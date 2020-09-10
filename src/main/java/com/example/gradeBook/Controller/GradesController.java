@@ -29,7 +29,7 @@ public class GradesController {
         return this.gradesService.getAllWeights();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ApiResponse getGradeByID(@PathVariable("id") Long id){
         return this.gradesService.getGradeByID(id);
     }

@@ -109,10 +109,7 @@ public class StudentService {
             return new ApiResponse(404,"unsucessfull! student  cannot be deleted ",student);
         }
         else {
-            student.setStatus("Unactive");
-            studentRepository.save(student);
-            user.setActive(false);
-            userDao.save(user);
+            studentRepository.delete(student);
             return new ApiResponse(200,"sucessfully deleted",student);
 
         }
