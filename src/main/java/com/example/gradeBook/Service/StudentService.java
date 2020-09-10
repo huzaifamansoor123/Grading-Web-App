@@ -35,7 +35,7 @@ public class StudentService {
         if(foundstudent==null && founduser==null ) {
             Student student = new Student();
             student.setStudentName(studentDTO.getStudentName());
-            student.setPassword(studentDTO.getPassword());
+            student.setPassword(studentDTO.getStudentPassword());
             student.setStudentEmail(studentDTO.getStudentEmail());
             student.setStatus("Active");
             studentRepository.save(student);
@@ -43,7 +43,7 @@ public class StudentService {
 
             User user = new User();
             user.setName(studentDTO.getStudentName());
-            user.setPassword(bcryptEncoder.encode(studentDTO.getPassword()));
+            user.setPassword(bcryptEncoder.encode(studentDTO.getStudentPassword()));
             user.setEmail(studentDTO.getStudentEmail());
             user.setClientId(1l);
             user.setActive(true);
@@ -87,30 +87,32 @@ public class StudentService {
             student.setStatus("Active");
             student.setStudentEmail(studentDTO.getStudentEmail());
             student.setStudentName(studentDTO.getStudentName());
-            student.setPassword(bcryptEncoder.encode(studentDTO.getPassword()));
+            student.setPassword((studentDTO.getStudentPassword()));
             studentRepository.save(student);
             user.setEmail(studentDTO.getStudentEmail());
             user.setName(studentDTO.getStudentName());
-            user.setPassword((bcryptEncoder.encode( studentDTO.getPassword())));
+            user.setPassword((bcryptEncoder.encode( studentDTO.getStudentPassword())));
             userDao.save(user);
 
 
 
 
-            return new ApiResponse(200, "succesfully updated", student);
+            return new ApiResponse(200, "succesfully updated");
 
         }
     }
 
     public ApiResponse deleteStudent(Long id){
         Student student=studentRepository.getOne(id);
-        User user=userDao.findByEmail(student.getStudentEmail());
-        if(student==null&&user==null){
+        User deleteuser=userDao.getOne(id);
+//        User user=userDao.findByEmail(student.getStudentEmail());
+        if(student==null&&deleteuser==null){
             return new ApiResponse(404,"unsucessfull! student  cannot be deleted ",student);
         }
         else {
             studentRepository.delete(student);
-            return new ApiResponse(200,"sucessfully deleted",student);
+            userDao.delete(deleteuser);
+            return new ApiResponse(200,"sucessfully deleted");
 
         }
 
