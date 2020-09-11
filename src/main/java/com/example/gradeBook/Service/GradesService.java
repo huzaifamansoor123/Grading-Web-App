@@ -27,7 +27,6 @@ public class GradesService {
         Grades weight=new Grades();
         StudentGrade studentGrade = new StudentGrade();
 
-
         weight.setCourseMarks(gradesDTO.getCourseMarks());
         weight.setStudent(gradesDTO.getStudent());
         weight.setCourse(gradesDTO.getCourse());
@@ -56,7 +55,7 @@ public class GradesService {
         }
     }
     public ApiResponse updateWeight(Long id,GradesDTO gradesDTO){
-        Grades weightTofound=gradesRepository.getOne(id);
+        Grades weightTofound = gradesRepository.getOne(id);
         if(weightTofound==null){
             return new ApiResponse(404,"Not found ",weightTofound);
 
@@ -65,7 +64,7 @@ public class GradesService {
             weightTofound.setStudent(gradesDTO.getStudent());
             weightTofound.setCourseMarks(gradesDTO.getCourseMarks());
             gradesRepository.save(weightTofound);
-            return new ApiResponse(200,"sucessfully updated",weightTofound);
+            return new ApiResponse(200,"sucessfully updated");
         }
 
     }
@@ -76,7 +75,7 @@ public class GradesService {
         }
         else {
             gradesRepository.delete(weightTofound);
-            return new ApiResponse(200,"successfully deleted",weightTofound);
+            return new ApiResponse(200,"successfully deleted");
         }
 
     }
