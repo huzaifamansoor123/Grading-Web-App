@@ -8,6 +8,8 @@ import com.example.gradeBook.Model.User;
 import com.example.gradeBook.Repository.StudentRepository;
 import com.example.gradeBook.Repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class StudentService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    JavaMailSender javaMailSender;
+
 
 
     public ApiResponse addStudent( StudentDTO studentDTO){
@@ -37,6 +42,7 @@ public class StudentService {
             student.setPassword(studentDTO.getStudentPassword());
             student.setStudentEmail(studentDTO.getStudentEmail());
             student.setStatus("Active");
+
             studentRepository.save(student);
 
 
@@ -48,8 +54,14 @@ public class StudentService {
             user.setActive(true);
             user.setUserType("student");
             userDao.save(user);
+            try {
+                mailToUser(studentDTO.getStudentEmail(),studentDTO.getStudentEmail(),studentDTO.getStudentPassword());
 
-            return new ApiResponse(200,"SUCCESSFULLY SAVED",student);
+                return new ApiResponse(200,"SUCCESSFULLY SAVED",student);
+            }catch (Exception e){
+                return new ApiResponse(200,"SUCCESSFULLY SAVED BUT SOME ERROR OCCURED IN SENDING MAIL ",student);
+            }
+
 
         }
         else{
@@ -92,11 +104,18 @@ public class StudentService {
             user.setName(studentDTO.getStudentName());
             user.setPassword((bcryptEncoder.encode( studentDTO.getStudentPassword())));
             userDao.save(user);
+            try {
+                mailToUser(studentDTO.getStudentEmail(),studentDTO.getStudentEmail(),studentDTO.getStudentPassword());
+                return new ApiResponse(200, "succesfully updated");
+            }catch (Exception e){
+                return new ApiResponse(200, " succesfully updated but error in sending email please try again");
+            }
 
 
 
 
-            return new ApiResponse(200, "succesfully updated");
+
+
 
         }
     }
@@ -115,6 +134,17 @@ public class StudentService {
 
         }
 
+
+    }
+    void mailToUser(String recevierEmail,String username,String passowrd) {
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(recevierEmail);
+
+        msg.setSubject("UserName and Password");
+        msg.setText("Your UserName is:"+username+" "+" Your Password is:"+passowrd);
+
+        javaMailSender.send(msg);
 
     }
 }
