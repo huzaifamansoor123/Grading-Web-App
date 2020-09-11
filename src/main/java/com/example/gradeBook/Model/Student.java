@@ -13,7 +13,6 @@ public class Student {
     String studentPassword;
 
     String studentEmail;
-
     String studentName;
     String status;
 
