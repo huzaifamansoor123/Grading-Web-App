@@ -4,9 +4,11 @@ import com.example.gradeBook.Commons.ApiResponse;
 import com.example.gradeBook.Commons.Status;
 import com.example.gradeBook.Dto.GradesDTO;
 import com.example.gradeBook.Model.Grades;
+import com.example.gradeBook.Model.Student;
 import com.example.gradeBook.Model.StudentGrade;
 import com.example.gradeBook.Repository.GradesRepository;
 import com.example.gradeBook.Repository.StudentGradeRepository;
+import com.example.gradeBook.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,17 @@ public class GradesService {
     GradesRepository gradesRepository;
     @Autowired
     StudentGradeRepository studentGradeRepository;
+    @Autowired
+    StudentRepository studentRepository;
 
 
     public ApiResponse addWeight(GradesDTO gradesDTO){
+
+        List<StudentGrade> sg = studentGradeRepository.findByStudentId(gradesDTO.getStudent().getId(), gradesDTO.getCourse().getId());
+            if(sg.size()>0){
+                return new ApiResponse(Status.Status_DUPLICATE,"Duplicate Course or Student",null);
+
+            }
 
         Grades weight=new Grades();
         StudentGrade studentGrade = new StudentGrade();

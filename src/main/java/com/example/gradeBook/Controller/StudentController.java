@@ -39,5 +39,10 @@ public class StudentController {
     public ApiResponse deleteStudent(@PathVariable("id") Long id){
         return this.studentService.deleteStudent(id);
     }
+    @GetMapping("/gradebook/{email}")
+    public ApiResponse GradeBookData(@PathVariable("email") String email)
+    {
+        return studentService.getGradeBookData(email);
+    }
 
 }
