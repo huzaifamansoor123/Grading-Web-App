@@ -15,7 +15,6 @@ public class StudentGrade implements Serializable {
     Long id;
 
 
-
     @ManyToOne
     @JoinColumn
     private Student student;

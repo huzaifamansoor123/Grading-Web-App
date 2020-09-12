@@ -136,7 +136,7 @@ public class StudentService {
 
     public ApiResponse deleteStudent(Long id){
         Student student=studentRepository.getOne(id);
-        User deleteuser=userDao.getOne(id);
+        User deleteuser=userDao.findByEmail(student.getStudentEmail());
 //        User user=userDao.findByEmail(student.getStudentEmail());
         if(student==null&&deleteuser==null){
             return new ApiResponse(404,"unsucessfull! student  cannot be deleted ",student);
