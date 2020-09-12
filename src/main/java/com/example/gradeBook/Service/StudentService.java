@@ -2,11 +2,13 @@ package com.example.gradeBook.Service;
 
 import com.example.gradeBook.Commons.ApiResponse;
 import com.example.gradeBook.Commons.Status;
+import com.example.gradeBook.Dto.ProfileDTO;
 import com.example.gradeBook.Dto.StudentDTO;
+import com.example.gradeBook.Model.Grades;
 import com.example.gradeBook.Model.Student;
+import com.example.gradeBook.Model.StudentGrade;
 import com.example.gradeBook.Model.User;
-import com.example.gradeBook.Repository.StudentRepository;
-import com.example.gradeBook.Repository.UserDao;
+import com.example.gradeBook.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +32,18 @@ public class StudentService {
 
     @Autowired
     JavaMailSender javaMailSender;
+
+    @Autowired
+    StudentGradeRepository studentGradeRepository;
+
+    @Autowired
+    CoursesRepository coursesRepository;
+
+    @Autowired
+    GradesRepository gradesRepository;
+
+
+
 
 
 
@@ -145,6 +159,28 @@ public class StudentService {
         msg.setText("Your UserName is:"+username+" "+" Your Password is:"+passowrd);
 
         javaMailSender.send(msg);
+
+    }
+
+    public ApiResponse getGradeBookData(String email) {
+        ProfileDTO profileDTO = new ProfileDTO();
+            Double weight=0.0;
+            Double obtainedMarks=0.0;
+        Student std=studentRepository.findBystudentEmail(email);
+         for(StudentGrade grade :std.getStudentGrades())
+         {
+           weight+=  grade.getCourses().getCourseWeight();
+         }
+        for(Grades grade :std.getGrades())
+        {
+            obtainedMarks+=  grade.getCourseMarks();
+        }
+        profileDTO.setCourseWeight((weight));
+        profileDTO.setObtainedMarks((obtainedMarks));
+        profileDTO.setEmail(std.getStudentEmail());
+        profileDTO.setStudent_name(std.getStudentName());
+        return new ApiResponse(Status.Status_Ok,"Fetched Sucessfully",profileDTO);
+
 
     }
 }
